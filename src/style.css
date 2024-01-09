@@ -1,0 +1,15 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@font-face {
+  font-family: IranSans;
+  src: url("./assets/fonts/IRANSans\(FaNum\).ttf");
+}
+
+body {
+  direction: rtl;
+  height: 100vh;
+  margin: 0;
+  font-family: IranSans;
+}
