@@ -1,19 +1,16 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../../redux/features/cart.slice";
+import { useDispatch } from "react-redux";
+import { selectProduct } from "../../redux/features/product.slice";
+import { Link } from "react-router-dom";
 
-function Product() {
-  const product = useSelector((state) => state.products.selectedProduct);
-  const item = useSelector((state) => state.cart);
+const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
-    dispatch(addToCart({ item: product, count: 1 }));
-  };
-  console.log(item);
   return (
-    <div className="flex flex-col justify-center items-center gap-8">
-      <div className="w-[360px] h-[430px] p-4 flex flex-col gap-2 justify-between">
+    <Link
+      onClick={() => dispatch(selectProduct(product))}
+      to={`/${product.catName}/${product.subCatName}/id=${product.id}`}
+    >
+      <div className="w-[320px] h-[420px] rounded p-4 border border-primary flex flex-col gap-2 justify-between hover:w-[330px] hover:h-[430px] hover:bg-header cursor-pointer">
         <img
           src={product.imgUrl}
           width={160}
@@ -38,15 +35,8 @@ function Product() {
           </div>
         </div>
       </div>
-      <button
-        type="button"
-        className="w-full rounded-md px-4 py-2 bg-primary text-sm font-normal text-white hover:bg-secondary w-1/2 max-w-[360px]"
-        onClick={handleAddToCart}
-      >
-        افزودن به سبد خرید
-      </button>
-    </div>
+    </Link>
   );
-}
+};
 
-export default Product;
+export default ProductCard;

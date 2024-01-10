@@ -2,6 +2,7 @@ import React from "react";
 import { ContentLinks } from "./catData";
 import clsx from "clsx";
 import Accordion from "../accordion";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   return (
@@ -21,7 +22,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             : "h-0 min-w-[0px] max-w-[0px] opacity-0 z-[-1] hidden"
         )}
       >
-        <Accordion items={ContentLinks} line={false} className={"px-3"} />
+        <Accordion items={ContentLinks()} line={false} className={"px-3"} />
       </div>
     </div>
   );

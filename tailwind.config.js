@@ -1,6 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-// Specify the type of the configuration as 'Config' from 'tailwindcss' module
-// This comment helps TypeScript understand the structure of the configuration
 
 import plugin from "tailwindcss/plugin"; // Import the 'plugin' function from 'tailwindcss/plugin'
 
@@ -26,14 +24,10 @@ export const theme = {
     menu: "#f0e9f5",
     primary: "#00058a",
     secondary: "#50008a",
+    error: "red",
     text: {
       primary: "#080142",
       secondary: "#1e0142",
-    },
-    table: {
-      main: "#d9b4c0",
-      header: "#e86f86",
-      border: "#ad234f",
     },
   },
   extend: {

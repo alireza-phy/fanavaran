@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
+import categoriesSlice from "./features/category.slice";
+import subCategoriesSlice from "./features/subCategory.slice";
 import productsSlice from "./features/product.slice";
-import digitalCategorySlice from "./features/digitalCategory.slice";
+import cartSlice from "./features/cart.slice";
 
 const rootReducer = combineReducers({
+  categories: categoriesSlice,
+  subCategories: subCategoriesSlice,
   products: productsSlice,
-  digitalCategory: digitalCategorySlice,
+  cart: cartSlice,
 });
 
 export default rootReducer;

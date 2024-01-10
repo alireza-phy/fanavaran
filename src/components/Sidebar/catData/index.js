@@ -1,65 +1,51 @@
-export const ContentLinks = [
-  {
-    title: "محصولات دیجیتال ",
-    mainLink: "/category/digitalProducts",
-    links: [
-      {
-        title: "لپ تاپ",
-        link: "/category/digitalProducts/laptop",
-      },
-      {
-        title: "هدفون",
-        link: "/category/digitalProducts/headphone",
-      },
-      {
-        title: "پرینتر",
-        link: "/category/digitalProducts/printer",
-      },
-      {
-        title: "موبایل",
-        link: "/category/digitalProducts/mobile",
-      },
-    ],
-  },
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-  {
-    title: "خانه و آشپزخانه",
-    mainLink: "/category/homeAndKitchen",
-    links: [
-      {
-        title: "ظروف آشپزخانه",
-        link: "/category/homeAndKitchen/kitchenUtensils",
-      },
-      {
-        title: "حمام و سرویس بهداشتی",
-        link: "/category/homeAndKitchen/bathroom",
-      },
-      {
-        title: "مبلمان و دکوراسیون خانگی",
-        link: "/category/homeAndKitchen/furnitureAndDecoration",
-      },
-    ],
-  },
-  {
-    title: "مد و پوشاک",
-    mainLink: "/category/fashionAndClothing",
-    links: [
-      {
-        title: "پوشاک مردانه",
-        link: "/category/fashionAndClothing/menCloths",
-      },
-      {
-        title: "پوشاک زنانه",
-        link: "/category/fashionAndClothing/womenCloths",
-      },
-      {
-        title: "پوشاک بچگانه",
-        link: "/category/fashionAndClothing/kidsCloths",
-      },
-      {
-        title: "زیورآلات",
-        link: "/category/fashionAndClothing/jewelry",
-      },
-    ],
-  },
-];
+export function ContentLinks() {
+  const allCategories = useSelector((state) => state.categories.categories);
+  const allSubCategories = useSelector(
+    (state) => state.subCategories.subCategories
+  );
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData([]);
+    const tempData = [];
+    allCategories.map((category) =>
+      tempData.push({
+        title: category.nameFa,
+        mainLink: `/${category?.name}`,
+        links: [],
+      })
+    );
+
+    allSubCategories.map((subCategory) =>
+      tempData.forEach((item, index) => {
+        if (item.mainLink === `/${subCategory.catName}`) {
+          tempData[index] = {
+            ...item,
+            links: [
+              ...item.links,
+              {
+                title: subCategory.nameFa,
+                link: `/${subCategory.catName}/${subCategory.name}`,
+              },
+            ],
+          };
+        }
+      })
+    );
+    tempData.map((item) => {
+      return {
+        ...item,
+        links: item.links.unshift({
+          title: "همه محصولات",
+          link: item.mainLink,
+        }),
+      };
+    });
+    setData(tempData);
+  }, [allCategories, allSubCategories]);
+
+  return data;
+}

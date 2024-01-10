@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 export const AccordionItem = ({ title, content, isOpen, setIsOpen }) => {
   const toggle = (title) => {
@@ -36,8 +37,10 @@ export const AccordionItem = ({ title, content, isOpen, setIsOpen }) => {
           "transition-all ease-linear px-3 text-primary flex flex-col gap-2"
         )}
       >
-        {content.map((item) => (
-          <a href={item.link}> {item.title}</a>
+        {content.map((item, index) => (
+          <Link key={index} to={item.link}>
+            {item.title}
+          </Link>
         ))}
       </div>
     </div>
@@ -48,13 +51,7 @@ const Accordion = ({ items = [], className }) => {
   console.log(items);
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div
-      id="accrodion"
-      className={clsx(
-        "bg-white rounded-2xl ",
-        className,
-      )}
-    >
+    <div id="accrodion" className={clsx("bg-white rounded-2xl ", className)}>
       {items.map((item, idx) => (
         <AccordionItem
           key={`${item.title}-${idx}`}
@@ -64,6 +61,9 @@ const Accordion = ({ items = [], className }) => {
           setIsOpen={setIsOpen}
         />
       ))}
+      <div className="px-3 font-bold pt-8 text-primary hover:text-secondary">
+        <Link to="/management">مدیریت محصولات</Link>
+      </div>
     </div>
   );
 };

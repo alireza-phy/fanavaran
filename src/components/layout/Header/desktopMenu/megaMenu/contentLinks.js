@@ -1,70 +1,36 @@
-export const ContentLinks = {
-  DigitalProducts: [
-    {
-      title: "تمام محصولات دیجیتال ",
-      mainLink: "/category/digitalProducts",
-      links: [
-        {
-          title: "لپ تاپ",
-          link: "/category/digitalProducts/laptop",
-        },
-        {
-          title: "هدفون",
-          link: "/category/digitalProducts/headphone",
-        },
-        {
-          title: "پرینتر",
-          link: "/category/digitalProducts/printer",
-        },
-        {
-          title: "موبایل",
-          link: "/category/digitalProducts/mobile",
-        },
-      ],
-    },
-  ],
-  HomeAndKitchen: [
-    {
-      title: "تمام محصولات خانه و آشپزخانه",
-      mainLink: "/category/homeAndKitchen",
-      links: [
-        {
-          title: "ظروف آشپزخانه",
-          link: "/category/homeAndKitchen/kitchenUtensils",
-        },
-        {
-          title: "حمام و سرویس بهداشتی",
-          link: "/category/homeAndKitchen/bathroom",
-        },
-        {
-          title: "مبلمان و دکوراسیون خانگی",
-          link: "/category/homeAndKitchen/furnitureAndDecoration",
-        },
-      ],
-    },
-  ],
-  FashionAndClothing: [
-    {
-      title: "تمام محصولات مد و پوشاک",
-      mainLink: "/category/fashionAndClothing",
-      links: [
-        {
-          title: "پوشاک مردانه",
-          link: "/category/fashionAndClothing/menCloths",
-        },
-        {
-          title: "پوشاک زنانه",
-          link: "/category/fashionAndClothing/womenCloths",
-        },
-        {
-          title: "پوشاک بچگانه",
-          link: "/category/fashionAndClothing/kidsCloths",
-        },
-        {
-          title: "زیورآلات",
-          link: "/category/fashionAndClothing/jewelry",
-        },
-      ],
-    },
-  ],
-};
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
+export function ContentLinks(key) {
+  const allCategories = useSelector((state) => state.categories.categories);
+  const allSubCategories = useSelector(
+    (state) => state.subCategories.subCategories
+  );
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    setData({});
+    const tempData = {};
+
+    allCategories.forEach((category) => {
+      tempData[category.name] = {
+        title: `تمام محصولات ${category.nameFa}`,
+        mainLink: `/${category.name}`,
+        links: [],
+      };
+    });
+
+    allSubCategories.forEach((subCategory) => {
+      const categoryKey = subCategory.catName;
+      if (tempData[categoryKey]) {
+        tempData[categoryKey].links.push({
+          title: subCategory.nameFa,
+          link: `/${subCategory.catName}/${subCategory.name}`,
+        });
+      }
+    });
+
+    setData(tempData);
+  }, [allCategories, allSubCategories]);
+  return data[`${key}`];
+}

@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import React from "react";
 
-
 const Input = (props) => {
   const {
     placeholder,
@@ -21,7 +20,7 @@ const Input = (props) => {
             readOnly={readonly}
             type="text"
             className={clsx(
-              "bg-main-primary border-none focus:outline-none rounded-md h-9 w-full p-2 caret-main-text-primary text-main-text-primary",
+              "border border-primary focus:outline-none rounded h-9 w-full p-2 caret-primary text-primary",
               [
                 {
                   "text-main-text-secondary": readonly,
@@ -37,9 +36,27 @@ const Input = (props) => {
         return (
           <textarea
             readOnly={readonly}
-            rows={4}
             className={clsx(
-              "bg-main-primary border-none focus:outline-none rounded-md w-full p-2 caret-main-text-primary text-main-text-primary",
+              "bg-main-primary focus:outline-none rounded-md w-full p-2 caret-main-text-primary text-main-text-primary",
+              [
+                {
+                  "text-main-text-secondary": readonly,
+                },
+              ]
+            )}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+          />
+        );
+      case "number":
+        return (
+          <input
+            readOnly={readonly}
+            type="number"
+            min={0}
+            className={clsx(
+              "border border-primary focus:outline-none rounded h-9 w-full p-2 caret-primary text-primary",
               [
                 {
                   "text-main-text-secondary": readonly,
@@ -64,7 +81,7 @@ const Input = (props) => {
     <div className="w-full flex flex-col gap-1">
       {handleInputType()}
       {fieldName && errors?.[fieldName] && (
-        <span className="text-main-text-primary text-sm pl-1">
+        <span className="text-error text-sm pl-1">
           * {errors?.[fieldName]?.message}
         </span>
       )}

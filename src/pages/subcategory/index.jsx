@@ -3,15 +3,17 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ProductCard from "../../components/productCard";
 
-function Category() {
-  const [category, setCategory] = useState([]);
+function SubCategory() {
+  const [subCategory, setSubCategory] = useState([]);
   const products = useSelector((state) => state.products.products);
   const location = useLocation();
 
   useEffect(() => {
-    setCategory(
+    setSubCategory(
       products.filter(
-        (item) => item.catName === location?.pathname?.split("/")?.[1]
+        (item) =>
+          item.catName === location?.pathname?.split("/")?.[1] &&
+          item.subCatName === location?.pathname?.split("/")?.[2]
       )
     );
   }, [products, location]);
@@ -19,7 +21,7 @@ function Category() {
   return (
     <div className="w-full mx-auto">
       <div className="flex flex-wrap gap-8 justify-around w-fit">
-        {category?.map((product) => (
+        {subCategory?.map((product) => (
           <div key={product.id}>
             <ProductCard product={product} />
           </div>
@@ -29,4 +31,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default SubCategory;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Links } from "../mobileMenu/links";
 import Sidebar from "../../../Sidebar";
+import { Link } from "react-router-dom";
 
 const MobileMenu = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -28,7 +29,7 @@ const MobileMenu = () => {
               >
                 {item?.icon}
                 {item?.link ? (
-                  <a href={item?.link} className="font-bold text-md">{item?.title}</a>
+                  <Link to={item?.link} className="font-bold text-md">{item?.title}</Link>
                 ) : (
                   <span className="font-bold text-md">{item?.title}</span>
                 )}

@@ -1,35 +1,22 @@
 import Content from "./content";
 import { ContentLinks } from "./contentLinks";
+import { useSelector } from "react-redux";
 
-export const Items = [
-  {
-    name: <div className={"flex gap-1 items-center"}>کالای دیجیتال</div>,
-    content: (setShowMegaMenu) => (
-      <Content
-        data={ContentLinks?.DigitalProducts}
-        setShowMegaMenu={setShowMegaMenu}
-      />
-    ),
-    slug: "DigitalProducts",
-  },
-  {
-    name: <div className={"flex gap-1 items-center"}>خانه و آشپزخانه</div>,
-    content: (setShowMegaMenu) => (
-      <Content
-        data={ContentLinks?.HomeAndKitchen}
-        setShowMegaMenu={setShowMegaMenu}
-      />
-    ),
-    slug: "HomeAndKitchen",
-  },
-  {
-    name: <div className={"flex gap-1 items-center"}>مد و پوشاک</div>,
-    content: (setShowMegaMenu) => (
-      <Content
-        data={ContentLinks?.FashionAndClothing}
-        setShowMegaMenu={setShowMegaMenu}
-      />
-    ),
-    slug: "FashionAndClothing",
-  },
-];
+export function Items() {
+  const allCategories = useSelector((state) => state.categories.categories);
+  const tempData = [];
+  allCategories.map((category) =>
+    tempData.push({
+      name: <div className={"flex gap-1 items-center"}>{category.nameFa}</div>,
+      content: (setShowMegaMenu) => (
+        <Content
+          data={ContentLinks(`${category.name}`)}
+          setShowMegaMenu={setShowMegaMenu}
+        />
+      ),
+      slug: `${category.name}`,
+    })
+  );
+  console.log(tempData);
+  return tempData;
+}
